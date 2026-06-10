@@ -1,0 +1,200 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:ribbon="using:Zero.App.Views.Ribbon"
+             xmlns:ui="using:Zero.App.UI"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:views="clr-namespace:Zero.App.Views"
+             xmlns:vm="clr-namespace:Zero.App.ViewModels"
+             x:DataType="vm:MainViewModel"
+             x:Class="Zero.App.Views.MainView"
+             Opacity="0.8" x:Name="Root">
+    <UserControl.Styles>
+        <Style Selector="Image.red">            
+            <Style.Animations>
+                <Animation FillMode="Forward" PlaybackDirection="Normal" SpeedRatio="1"  PlaybackBehavior="Always" Duration="0:0:1" IterationCount="Infinite" DelayBetweenIterations="0:0:0:10"> 
+                    <KeyFrame Cue="0%">
+                        <Setter Property="Opacity" Value="0.5"/>
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="Opacity" Value="1.0"/>
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+    </UserControl.Styles>
+
+    <DockPanel>
+
+        <ItemsControl
+            x:Name="items"
+            HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+            ItemsSource="{Binding Workspaces}"
+            Padding="2"
+            DockPanel.Dock="Top">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel ItemSpacing="6"
+                       Orientation="Horizontal">
+                    </WrapPanel>
+            </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+			<ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button
+                        Cursor="Hand"
+                        CornerRadius="5"
+                        UseLayoutRounding="True"
+                        FontWeight="{Binding IsSelected, Converter={StaticResource BoolToBoldConverter}}"
+                        Margin="2"
+                        Padding="1"
+                        Command="{Binding #items.((vm:MainViewModel)DataContext).SelectWorkspace}" 
+                        CommandParameter="{Binding}">
+                        <TextBlock  
+                            FontSize="14"
+                            Padding="6,3"
+                            Foreground="{Binding IsSelected, Converter={StaticResource BoolToForegroundConverter}}"
+                            TextAlignment="Right"
+                            Text="{Binding Title}" >
+                        </TextBlock>
+                    </Button>                    
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!-- Ribbon -->
+        <Expander 
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            Background="Transparent"
+            Header="{Binding SelectedWorkspace.Title}"
+            Padding="0"
+            Margin="0"
+            Foreground="WhiteSmoke"
+            BorderThickness="0,1,0,0"
+            Cursor="Hand"
+            CornerRadius="5"
+            DockPanel.Dock="Top">
+            <ribbon:RibbonView 
+                DataContext="{Binding}" />
+        </Expander>
+
+        <!-- Log messages...  -->
+        <Expander
+            ExpandDirection="Up"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            Background="Transparent"
+            Padding="0"
+            Margin="0"
+            Foreground="WhiteSmoke"
+            BorderThickness="0,1,0,0"
+            Cursor="Hand"
+            CornerRadius="5"
+            DockPanel.Dock="Bottom">
+            <Expander.Header>
+                <StackPanel
+                 Orientation="Horizontal">
+    				<TextBlock Text="Working on: "/>
+                    <ui:RotatingImage   
+                        Kind="{Binding SelectedWorkspace.LastMessage.Kind}"
+                        Classes="red" 
+                        Margin="2"
+                        Height="18"
+                        Width="18"
+                        Source="{Binding SelectedWorkspace.LastMessage.Kind, Converter={StaticResource IconToBitmapConverter}, UpdateSourceTrigger=PropertyChanged}"
+                        >
+                    </ui:RotatingImage>
+    				<TextBlock Margin="6,2" Text="{Binding SelectedWorkspace.LastMessage.Text}"/>
+                </StackPanel>
+            </Expander.Header>
+			<ScrollViewer
+                Height="100"
+                VerticalScrollBarVisibility="Auto">
+				<ItemsControl
+                    ItemsSource="{Binding SelectedWorkspace.Messages}">
+                    <ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+						<DataTemplate>
+                            <Button Margin="1" Padding="1" UseLayoutRounding="True" CornerRadius="3" Command="{Binding ToggleOpenCommand}">
+                                <StackPanel
+                                    Orientation="Horizontal">
+                                    <Popup 
+                                        IsOpen="{Binding IsOpen}"
+                                        Topmost="False">
+										<Border
+                                            UseLayoutRounding="True"
+                                            CornerRadius="5"
+                                            BorderThickness="1"
+                                            BorderBrush="#FF88EE88"
+                                            Background="#D877AA77"
+                                            Padding="0">
+                                            <Grid ColumnDefinitions="Auto, Auto, *, 32" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto">
+
+                                                <ui:RotatingImage 
+                                                    HorizontalAlignment="Left"
+                                                    Kind="{Binding Kind}"
+                                                    Grid.RowSpan="2"
+                                                    Height="28"
+                                                    Width="28"
+                                                    Margin="8,8,2,2"
+                                                    Source="{Binding Kind, Converter={StaticResource IconToBitmapConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                    />
+
+                                                <Border                                                    
+                                                    Padding="2"
+                                                    UseLayoutRounding="True"
+                                                    CornerRadius="4"
+                                                    BorderBrush="#FF88EE88"
+                                                    BorderThickness="1,0,0,1"
+                                                    Grid.Column="3">
+                                                    <Button Command="{Binding CloseCommand}"
+                                                            BorderThickness="0"
+                                                            Background="Transparent">
+                                                        <TextBlock Margin="0" Text="×" />
+                                                    </Button>
+                                                    
+                                                </Border>
+
+                                                    <TextBlock Height="32" Margin="4" Padding="4" Grid.Row="0" Grid.Column="1" MaxLines="2"  TextWrapping="Wrap" MaxWidth="220" Text="{Binding Text}"/>
+											    <TextBlock Margin="8,2" Grid.Row="2" Text="Start "/>
+                                                    <TextBlock Margin="8,2" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Start}"/>
+											    <TextBlock Margin="8,2" Grid.Row="3" Text="End "/>
+                                                    <TextBlock Margin="8,2" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding End}"/>
+											    <TextBlock Margin="8,2" Grid.Row="4" Text="Duration "/>
+                                                    <TextBlock Margin="8,2" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Duration}"/>
+											    <TextBlock Margin="8,2,8,8" Grid.Row="5" Text="Status "/>
+                                                    <TextBlock Margin="8,2,8,8" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Kind}"/>
+
+<!--ClipboardText-->
+<!--											    <TextBlock Grid.Row="6" Text="All:      "/>
+                                                    <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding ClipboardText}"/>
+-->
+                                            </Grid>
+                                        </Border>
+                                    </Popup>
+                                    <ui:RotatingImage 
+                                        Kind="{Binding Kind}"
+                                        Margin="1"
+                                        Height="14"
+                                        Width="14"
+                                        Source="{Binding Kind, Converter={StaticResource IconToBitmapConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                        />
+	    						    <TextBlock Margin="6,1" Text="{Binding Text}" />
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Expander>
+
+
+        <!-- Workspace -->
+        <ContentControl Content="{Binding SelectedWorkspace.View}"/>
+
+
+    </DockPanel>
+</UserControl>

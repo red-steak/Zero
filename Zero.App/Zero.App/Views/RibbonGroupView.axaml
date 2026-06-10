@@ -1,0 +1,45 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ribbon="using:Zero.Core.Ribbon"
+             xmlns:views="clr-namespace:Zero.App.Views.Ribbon"
+             x:Class="Zero.App.Views.Ribbon.RibbonGroupView"
+             x:DataType="ribbon:RibbonGroupViewModel">
+
+    <Border Classes="ribbon-group" 
+            UseLayoutRounding="True"
+            CornerRadius="5"
+            Background="#AA66AA55"
+            BorderBrush="#CCC" BorderThickness="1,1,0,0" Margin="4,2" Padding="3,1">
+        <Border.Styles>
+            <Style Selector="Border:dark">
+                <Setter Property="Background"
+                        Value="{DynamicResource MicaDark}"/>
+            </Style>
+        </Border.Styles>
+            
+        <StackPanel>
+
+            <TextBlock Text="{Binding Header}"
+                       HorizontalAlignment="Left"
+                       FontWeight="SemiBold"
+                       FontSize="{Binding Size, Converter={StaticResource RibbonSizeToFontSizeConverter}}"
+                       Margin="2,2,0,1"/>
+
+            <ItemsControl ItemsSource="{Binding Commands}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <views:RibbonButtonView VerticalAlignment="Top" Margin="2,2,1,0" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+        </StackPanel>
+    </Border>
+
+</UserControl>

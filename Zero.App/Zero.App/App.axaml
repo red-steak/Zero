@@ -1,0 +1,38 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="using:Zero.App.Converters"
+             xmlns:local="using:Zero.App"
+             x:Class="Zero.App.App"
+             RequestedThemeVariant="Dark">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+
+    <Application.DataTemplates>
+        <local:ViewLocator/>
+    </Application.DataTemplates>
+
+    <Application.Styles>
+        <FluentTheme />
+    </Application.Styles>
+
+      <Application.Resources>
+
+        <converters:RibbonSizeToWidthConverter x:Key="RibbonSizeToWidthConverter"/>
+        <converters:RibbonSizeToHeightConverter x:Key="RibbonSizeToHeightConverter"/>
+        <converters:RibbonSizeToIconSizeConverter x:Key="RibbonSizeToIconSizeConverter"/>
+        <converters:RibbonSizeToFontSizeConverter x:Key="RibbonSizeToFontSizeConverter"/>
+        <converters:IconToBitmapConverter x:Key="IconToBitmapConverter"/>
+        <converters:SizeToVisibilityConverter x:Key="SizeToVisibilityConverter"/>
+        <converters:InvertedSizeToVisibilityConverter x:Key="InvertedSizeToVisibilityConverter"/> 
+        <converters:BoolToBoldConverter x:Key="BoolToBoldConverter"/>
+        <converters:BoolToForegroundConverter x:Key="BoolToForegroundConverter"/>
+        <converters:InvertedBoolToForegroundConverter x:Key="InvertedBoolToForegroundConverter "/>
+
+        <ResourceDictionary x:Key="all">
+            <ResourceDictionary.MergedDictionaries>
+                <MergeResourceInclude Source="Styles/FluentRibbon.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+      </Application.Resources>
+
+</Application>

@@ -1,0 +1,23 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:ribbon="using:Zero.Core.Ribbon"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:views="clr-namespace:Zero.App.Views.Ribbon"
+             xmlns:vm="clr-namespace:Zero.Core.Ribbon"
+             x:Class="Zero.App.Views.Ribbon.RibbonTabView"
+             x:DataType="ribbon:RibbonTabViewModel">
+
+    <ItemsControl ItemsSource="{Binding Groups}">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <views:RibbonGroupView/>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+
+</UserControl>

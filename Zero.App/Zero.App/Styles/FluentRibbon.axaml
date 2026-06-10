@@ -1,0 +1,91 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ========================= -->
+    <!--   FLUENT COLOR PALETTE   -->
+    <!-- ========================= -->
+    <Color x:Key="RibbonBackground">#F3F3F3</Color>
+    <Color x:Key="RibbonBorder">#D0D0D0</Color>
+    <Color x:Key="RibbonTabSelected">#FFFFFF</Color>
+    <Color x:Key="RibbonTabHover">#EDEDED</Color>
+    <Color x:Key="RibbonGroupBackground">#FAFAFA</Color>
+    <Color x:Key="RibbonButtonHover">#E5E5E5</Color>
+    <Color x:Key="RibbonButtonPressed">#DADADA</Color>
+
+    <Style x:Key="WindowStyle" Selector="Window">
+        <Setter Property="Background">
+            <SolidColorBrush Opacity="0.8" Color="{StaticResource RibbonBackground}"/>
+        </Setter>
+    </Style>
+
+    <Style x:Key="UserControlStyle" Selector="UserControl">
+        <Setter Property="Background">
+            <SolidColorBrush Opacity="0.8" Color="{StaticResource RibbonBackground}"/>
+        </Setter>
+    </Style>
+
+    <!-- ========================= -->
+    <!--      RIBBON TAB STYLE     -->
+    <!-- ========================= -->
+    <Style x:Key="TabControlStyle" Selector="TabControl">
+        <Setter Property="Background" Value="{StaticResource RibbonBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource RibbonBorder}"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+
+    <Style x:Key="TabItemStyle" Selector="TabItem">
+        <Setter Property="Padding" Value="12 6"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0 0 0 2"/>
+        <Setter Property="Cursor" Value="Hand"/>
+    </Style>
+
+    <Style x:Key="TabItemPointerOverStyle" Selector="TabItem.pointerover">
+        <Setter Property="Background" Value="{StaticResource RibbonTabHover}"/>
+    </Style>
+
+    <Style x:Key="TabItemSelectedStyle" Selector="TabItem.selected">
+        <Setter Property="Background" Value="{StaticResource RibbonTabSelected}"/>
+        <Setter Property="BorderBrush" Value="#0078D4"/> <!-- Fluent blue -->
+        <Setter Property="BorderThickness" Value="0 0 0 3"/>
+    </Style>
+
+
+    <!-- ========================= -->
+    <!--     RIBBON GROUP STYLE    -->
+    <!-- ========================= -->
+    <Style x:Key="RibbonGroupBorderStyle" Selector="Border.ribbon-group">
+        <Setter Property="Background" Value="{StaticResource RibbonGroupBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource RibbonBorder}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="Padding" Value="6"/>
+        <Setter Property="Margin" Value="4"/>
+    </Style>
+
+    <!-- ========================= -->
+    <!--     RIBBON BUTTON STYLE   -->
+    <!-- ========================= -->
+    <Style x:Key="RibbonButtonStyle" Selector="Button.ribbon-button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="Padding" Value="6"/>
+        <Setter Property="Cursor" Value="Hand"/>
+    </Style>
+
+    <Style x:Key="RibbonButtonPointerOverStyle" Selector="Button.ribbon-button.pointerover">
+        <Setter Property="Background" Value="{StaticResource RibbonButtonHover}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource RibbonBorder}"/>
+    </Style>
+
+    <Style x:Key="RibbonButtonPressedStyle" Selector="Button.ribbon-button.pressed">
+        <Setter Property="Background" Value="{StaticResource RibbonButtonPressed}"/>
+        <Setter Property="BorderBrush" Value="#A0A0A0"/>
+    </Style>
+
+</ResourceDictionary>

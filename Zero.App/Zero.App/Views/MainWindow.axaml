@@ -1,0 +1,26 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Zero.App.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="using:Zero.App.Views"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Zero.App.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Icon="avares://Zero.App/Assets/logo001.ico"
+        Title="Zero Tool App"
+        Width="{Binding WindowWidth, Mode=TwoWay}"
+        Height="{Binding WindowHeight, Mode=TwoWay}"        
+        Opacity="0.95"
+        BorderThickness="0"
+        Background="#BB228C44"
+        CornerRadius="5"
+        
+        WindowDecorations="Full"
+        WindowState="Normal"
+        TransparencyLevelHint="AcrylicBlur"        
+        WindowStartupLocation="CenterScreen">
+        
+        <views:MainView Margin="2" CornerRadius="5" UseLayoutRounding="True" DataContext="{Binding}" />
+
+</Window>
