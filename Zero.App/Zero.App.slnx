@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/App/">
+    <Project Path="Zero.App.Android/Zero.App.Android.csproj" />
+    <Project Path="Zero.App.Browser/Zero.App.Browser.csproj" />
+    <Project Path="Zero.App.Desktop/Zero.App.Desktop.csproj" />
+    <Project Path="Zero.App.iOS/Zero.App.iOS.csproj" />
+    <Project Path="Zero.App/Zero.App.csproj" />
+  </Folder>
+  <Folder Name="/Plugins/">
+    <Project Path="../Zero.Plugins/Zero.Plugin.Yaml/Zero.Plugin.Yaml.csproj" />
+    <Project Path="../Zero.Plugins/Zero.Plugin.YamlViewer/Zero.Plugin.YamlViewer/Zero.Plugin.YamlViewer.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Packages.props" />
+  </Folder>
+  <Project Path="../Zero.Core/Zero.Core.csproj" />
+</Solution>

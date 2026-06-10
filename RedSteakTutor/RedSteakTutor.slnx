@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Packages.props" />
+  </Folder>
+  <Project Path="RedSteakTutor.Android/RedSteakTutor.Android.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
+  <Project Path="RedSteakTutor.Browser/RedSteakTutor.Browser.csproj" />
+  <Project Path="RedSteakTutor.Desktop/RedSteakTutor.Desktop.csproj" />
+  <Project Path="RedSteakTutor.iOS/RedSteakTutor.iOS.csproj" />
+  <Project Path="RedSteakTutor/RedSteakTutor.csproj" />
+</Solution>
