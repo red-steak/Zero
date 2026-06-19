@@ -1,8 +1,8 @@
 ﻿using ReactiveUI;
-using Zero.Core.Workspaces;
-using Zero.Core.Commands;
 using ReactiveUI.SourceGenerators;
 using System.Collections.ObjectModel;
+using Zero.Core.Commands;
+using Zero.Core.Workspaces;
 
 namespace Zero.Plugin.YamlViewer;
 
@@ -35,5 +35,5 @@ public partial class YamlViewerViewModel : ReactiveObject, IWorkspaceViewModel
 
     [Reactive] Message? lastMessage;
 
-    [Reactive] bool isSelected; 
+    [Reactive] bool isSelected;
 }

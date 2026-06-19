@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Splat;
 using System.Collections.ObjectModel;
 using Zero.Core.Plugins;
 using Zero.Core.Workspaces;

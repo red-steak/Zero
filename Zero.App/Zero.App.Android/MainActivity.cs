@@ -1,8 +1,6 @@
 ﻿using Android.App;
 using Android.Content.PM;
-using Avalonia;
 using Avalonia.Android;
-using Java.Lang;
 
 namespace Zero.App.Android;
 

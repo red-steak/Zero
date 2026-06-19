@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Browser;
 using Microsoft.Extensions.DependencyInjection;
+using ReactiveUI.Avalonia;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,7 +11,6 @@ using Zero.App.Views;
 using Zero.Core.Pipelines;
 using Zero.Core.Plugins;
 using Zero.Core.Ribbon;
-using ReactiveUI.Avalonia;
 
 internal sealed partial class Program
 {

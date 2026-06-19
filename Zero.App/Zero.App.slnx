@@ -3,10 +3,15 @@
     <Project Path="Zero.App.Android/Zero.App.Android.csproj" />
     <Project Path="Zero.App.Browser/Zero.App.Browser.csproj" />
     <Project Path="Zero.App.Desktop/Zero.App.Desktop.csproj" />
-    <Project Path="Zero.App.iOS/Zero.App.iOS.csproj" />
+    <Project Path="Zero.App.iOS/Zero.App.iOS.csproj">
+      <Deploy />
+    </Project>
     <Project Path="Zero.App/Zero.App.csproj" />
   </Folder>
   <Folder Name="/Plugins/">
+    <Project Path="../Zero.Plugins/Canvas/Zero.Plugin.Canvas.csproj" />
+    <Project Path="../Zero.Plugins/Fractal/Fractal.csproj" Id="8230015e-5846-4a48-ab6e-315fb6e07c48" />
+    <Project Path="../Zero.Plugins/Shared/Shared.csproj" Id="d76f1706-1130-4897-8227-18a855d0f64e" />
     <Project Path="../Zero.Plugins/Zero.Plugin.Yaml/Zero.Plugin.Yaml.csproj" />
     <Project Path="../Zero.Plugins/Zero.Plugin.YamlViewer/Zero.Plugin.YamlViewer/Zero.Plugin.YamlViewer.csproj" />
   </Folder>

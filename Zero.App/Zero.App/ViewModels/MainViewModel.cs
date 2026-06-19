@@ -1,9 +1,7 @@
 ﻿using DynamicData;
 using DynamicData.Binding;
-using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 using ReactiveUI.SourceGenerators;
-using Splat;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,6 +26,14 @@ public partial class MainViewModel : ReactiveObject
     [Reactive] double windowHeight = 600;
     [Reactive] RibbonSize ribbonSize = RibbonSize.Large;
 
+    [Reactive] bool isRibbonShown = true;
+
+    [ReactiveCommand]
+    void ToggleRibbon()
+    {
+        IsRibbonShown = !IsRibbonShown;
+    }
+
     public ReactiveCommand<IWorkspaceViewModel, Unit> SelectWorkspace { get; init; }
 
     public ReactiveCommand<string, Unit> GlobalHotkeyCommand { get; }
@@ -40,7 +46,7 @@ public partial class MainViewModel : ReactiveObject
 
         Workspaces.Add(plugins.Select(x => x.CreateWorkspace()));
 
-        SelectWorkspace = ReactiveCommand.Create<IWorkspaceViewModel>(workspace => 
+        SelectWorkspace = ReactiveCommand.Create<IWorkspaceViewModel>(workspace =>
         {
             if (SelectedWorkspace is not null && SelectedWorkspace != workspace)
             {
@@ -84,8 +90,8 @@ public partial class MainViewModel : ReactiveObject
             .Subscribe(tuple =>
             {
                 var (w, h, selectedWorkspace) = tuple;
-                if (w < 400 || h < 300) RibbonSize = RibbonSize.Small;
-                else if (w < 800 || h < 600) RibbonSize = RibbonSize.Medium;
+                if (w < 300 || h < 200) RibbonSize = RibbonSize.Small;
+                else if (w < 600 || h < 400) RibbonSize = RibbonSize.Medium;
                 else RibbonSize = RibbonSize.Large;
 
                 _ribbonProvider.ApplyRibbonSize(RibbonTabs, RibbonSize);

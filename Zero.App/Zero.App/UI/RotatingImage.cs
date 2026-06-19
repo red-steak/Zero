@@ -1,11 +1,10 @@
-﻿using System;
-using System.Data;
-using System.Threading.Tasks;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Styling;
+using System;
+using System.Threading.Tasks;
 using Zero.Core.Workspaces;
 
 namespace Zero.App.UI
@@ -54,7 +53,7 @@ namespace Zero.App.UI
             var animation = new Animation
             {
                 Duration = TimeSpan.FromSeconds(1.5),       // Jak dlouho trvá jedna otočka o 360 stupňů
-                IterationCount = IterationCount.Parse("2"), 
+                IterationCount = IterationCount.Parse("2"),
                 Children =
             {
                 new KeyFrame
@@ -87,7 +86,7 @@ namespace Zero.App.UI
             var animation = new Animation
             {
                 Duration = TimeSpan.FromSeconds(1.5),       // Jak dlouho trvá jedna otočka o 360 stupňů
-                IterationCount = IterationCount.Infinite, 
+                IterationCount = IterationCount.Infinite,
                 Children =
             {
                 new KeyFrame

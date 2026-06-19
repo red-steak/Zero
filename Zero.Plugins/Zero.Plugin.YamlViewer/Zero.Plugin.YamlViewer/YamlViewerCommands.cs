@@ -31,7 +31,7 @@ public partial class YamlViewerCommands(IEnumerable<ICommandPipeline> pipelines)
         {
             var obj = deserializer.Deserialize<object>(text);
             var yamlText = serializer.Serialize(obj);
-            return yamlText; 
+            return yamlText;
         }
         catch
         {

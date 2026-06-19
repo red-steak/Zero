@@ -1,0 +1,13 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Zero.Plugin.Canvas"
+             x:Class="Zero.Plugin.Canvas.CanvasView"
+             x:DataType="local:CanvasViewModel">
+
+       <TextBox 
+                 AcceptsReturn="True"
+                 Text="Hello CANVAS !!!"
+                 FontFamily="Consolas"
+                 FontSize="14" />
+
+</UserControl>

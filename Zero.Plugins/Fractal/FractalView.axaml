@@ -1,0 +1,12 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Zero.Plugin.Fractal"
+             x:Class="Zero.Plugin.Fractal.FractalView"
+             x:DataType="local:FractalViewModel">
+
+       <TextBox 
+                 AcceptsReturn="True"
+                 FontFamily="Consolas"
+                 FontSize="14" />
+
+</UserControl>

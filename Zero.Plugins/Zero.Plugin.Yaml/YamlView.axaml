@@ -4,14 +4,10 @@
              x:Class="Zero.Plugin.Yaml.YamlView"
              x:DataType="vm:YamlViewModel">
 
-
-    <Grid RowDefinitions="Auto,*" Margin="10">
-
-        <TextBox Grid.Row="1"
+       <TextBox 
                  AcceptsReturn="True"
                  Text="{Binding YamlText}"
                  FontFamily="Consolas"
                  FontSize="14" />
-    </Grid>
 
 </UserControl>

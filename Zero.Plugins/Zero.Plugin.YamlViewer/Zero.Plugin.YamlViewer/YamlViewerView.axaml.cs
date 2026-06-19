@@ -1,5 +1,4 @@
 using Avalonia.Controls;
-using YamlDotNet.RepresentationModel;
 
 namespace Zero.Plugin.YamlViewer;
 

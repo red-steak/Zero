@@ -1,7 +1,7 @@
 ﻿using Avalonia.Data.Converters;
-using Zero.Core.Ribbon;
 using System;
 using System.Globalization;
+using Zero.Core.Ribbon;
 
 namespace Zero.App.Converters;
 

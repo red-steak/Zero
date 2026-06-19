@@ -7,78 +7,87 @@
              x:DataType="vm:MainViewModel"
              x:Class="Zero.App.Views.MainView"
              Opacity="0.8" x:Name="Root">
-    <UserControl.Styles>
-        <Style Selector="Image.red">            
-            <Style.Animations>
-                <Animation FillMode="Forward" PlaybackDirection="Normal" SpeedRatio="1"  PlaybackBehavior="Always" Duration="0:0:1" IterationCount="Infinite" DelayBetweenIterations="0:0:0:10"> 
-                    <KeyFrame Cue="0%">
-                        <Setter Property="Opacity" Value="0.5"/>
-                    </KeyFrame>
-                    <KeyFrame Cue="100%">
-                        <Setter Property="Opacity" Value="1.0"/>
-                    </KeyFrame>
-                </Animation>
-            </Style.Animations>
-        </Style>
-    </UserControl.Styles>
+    <Grid
+        ColumnDefinitions="10*, Auto, *" RowDefinitions="Auto, *, Auto">
+    
+        <GridSplitter Grid.Row="1" Grid.Column="1"/>
 
-    <DockPanel>
+        <Grid
+            Grid.Column="2" Grid.Row="1"
+            RowDefinitions="Auto, Auto, *">
 
-        <ItemsControl
-            x:Name="items"
-            HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-            ItemsSource="{Binding Workspaces}"
-            Padding="2"
-            DockPanel.Dock="Top">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel ItemSpacing="6"
-                       Orientation="Horizontal">
-                    </WrapPanel>
-            </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-			<ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Button
-                        Cursor="Hand"
-                        CornerRadius="5"
-                        UseLayoutRounding="True"
-                        FontWeight="{Binding IsSelected, Converter={StaticResource BoolToBoldConverter}}"
-                        Margin="2"
-                        Padding="1"
-                        Command="{Binding #items.((vm:MainViewModel)DataContext).SelectWorkspace}" 
-                        CommandParameter="{Binding}">
-                        <TextBlock  
-                            FontSize="14"
-                            Padding="6,3"
-                            Foreground="{Binding IsSelected, Converter={StaticResource BoolToForegroundConverter}}"
-                            TextAlignment="Right"
-                            Text="{Binding Title}" >
-                        </TextBlock>
-                    </Button>                    
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+            <Expander  
+                    Grid.Row="0"
+                    Background="Transparent"
+                    FontSize="14"
+                    Padding="2,1"
+                    Header="View" >
+            <CheckBox
+                IsChecked="{Binding IsRibbonShown}"
+                Content="Top commands"
+                Background="Transparent"
+                Cursor="Hand"
+                CornerRadius="3"
+                UseLayoutRounding="True"
+                Margin="2"
+                Padding="2"
+                HorizontalAlignment="Left" HorizontalContentAlignment="Center" />
+            </Expander>
+
+            <Expander
+                    Grid.Row="1"
+                    Background="Transparent"
+                    Header="Plugins">
+                <ItemsControl
+                    Grid.Row="2"
+                    x:Name="items"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    ItemsSource="{Binding Workspaces}"
+                    Padding="0">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel ItemSpacing="2"
+                            Background="Transparent"
+                            Orientation="Horizontal">
+                        </WrapPanel>
+                </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+			    <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button
+                            Background="Transparent"
+                            Cursor="Hand"
+                            CornerRadius="3"
+                            UseLayoutRounding="True"
+                            Margin="2"
+                            Padding="4"
+                            Command="{Binding #items.((vm:MainViewModel)DataContext).SelectWorkspace}" 
+                            CommandParameter="{Binding}">
+                            <TextBlock  
+                                FontWeight="Bold"
+                                FontSize="14"
+                                Padding="1"
+                                Background="Transparent"
+                                Foreground="{Binding IsSelected, Converter={StaticResource BoolToForegroundConverter}}"
+                                TextAlignment="Center"
+                                Text="{Binding Title}" >
+                            </TextBlock>
+                        </Button>                    
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            </Expander>
+        </Grid>
 
         <!-- Ribbon -->
-        <Expander 
-            HorizontalAlignment="Stretch"
-            HorizontalContentAlignment="Stretch"
-            Background="Transparent"
-            Header="{Binding SelectedWorkspace.Title}"
-            Padding="0"
-            Margin="0"
-            Foreground="WhiteSmoke"
-            BorderThickness="0,1,0,0"
-            Cursor="Hand"
-            CornerRadius="5"
-            DockPanel.Dock="Top">
-            <ribbon:RibbonView 
-                DataContext="{Binding}" />
-        </Expander>
+        <ribbon:RibbonView 
+            Grid.Column="0" Grid.ColumnSpan="3"
+            Grid.Row="0"
+            DataContext="{Binding}" />
 
         <!-- Log messages...  -->
         <Expander
+            Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2"
             ExpandDirection="Up"
             HorizontalAlignment="Stretch"
             HorizontalContentAlignment="Stretch"
@@ -88,8 +97,7 @@
             Foreground="WhiteSmoke"
             BorderThickness="0,1,0,0"
             Cursor="Hand"
-            CornerRadius="5"
-            DockPanel.Dock="Bottom">
+            CornerRadius="5">
             <Expander.Header>
                 <StackPanel
                  Orientation="Horizontal">
@@ -106,7 +114,8 @@
     				<TextBlock Margin="6,2" Text="{Binding SelectedWorkspace.LastMessage.Text}"/>
                 </StackPanel>
             </Expander.Header>
-			<ScrollViewer
+			
+            <ScrollViewer
                 Height="100"
                 VerticalScrollBarVisibility="Auto">
 				<ItemsControl
@@ -193,8 +202,11 @@
 
 
         <!-- Workspace -->
-        <ContentControl Content="{Binding SelectedWorkspace.View}"/>
+        <ContentControl 
+            Grid.Column="0"
+            Grid.Row="1"
+            Content="{Binding SelectedWorkspace.View}"/>
 
 
-    </DockPanel>
+    </Grid>
 </UserControl>

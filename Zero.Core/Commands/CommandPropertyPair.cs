@@ -1,5 +1,4 @@
-﻿using ReactiveUI;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Zero.Core.Commands
 {

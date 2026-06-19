@@ -1,6 +1,4 @@
 using Avalonia.Controls;
-using Splat;
-using Zero.App.ViewModels;
 
 namespace Zero.App.Views;
 

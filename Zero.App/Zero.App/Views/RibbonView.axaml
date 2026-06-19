@@ -18,23 +18,23 @@
         </Style>
     </UserControl.Styles>
 
-        <TabControl ItemsSource="{Binding RibbonTabs}" Padding="3">
-            <TabControl.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock
-                        MaxHeight="12"
-                        Padding="-1"
-                        Text="{Binding Header}" 
-                        FontSize="{Binding Size, Converter={StaticResource RibbonSizeToFontSizeConverter}}"
-                        Margin="2,0"/>
-                </DataTemplate>
-            </TabControl.ItemTemplate>
+    <TabControl
+        IsVisible="{Binding IsRibbonShown}"
+        ItemsSource="{Binding RibbonTabs}" Padding="0">
+        <TabControl.ItemTemplate>
+            <DataTemplate>
+                <TextBlock
+                    Padding="0"
+                    Text="{Binding Header}" 
+                    FontSize="{Binding Size, Converter={StaticResource RibbonSizeToFontSizeConverter}}"
+                    Margin="2,0"/>
+            </DataTemplate>
+        </TabControl.ItemTemplate>
 
-            <TabControl.ContentTemplate>
-                <DataTemplate>
-                    <views:RibbonTabView Padding="2"/>
-                </DataTemplate>
-            </TabControl.ContentTemplate>
-        </TabControl>
-
+        <TabControl.ContentTemplate>
+            <DataTemplate>
+                <views:RibbonTabView Padding="1"/>
+            </DataTemplate>
+        </TabControl.ContentTemplate>
+    </TabControl>
 </UserControl>

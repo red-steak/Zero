@@ -5,7 +5,6 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Styling;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Linq;
 using Zero.App.ViewModels;
 
 namespace Zero.App;

@@ -3,7 +3,7 @@ using ReactiveUI.SourceGenerators;
 
 namespace Zero.Core.Ribbon
 {
-    public partial class RibbonGroupViewModel: ReactiveObject
+    public partial class RibbonGroupViewModel : ReactiveObject
     {
         [Reactive] string header = "";
         public List<RibbonButtonViewModel> Commands { get; init; } = [];

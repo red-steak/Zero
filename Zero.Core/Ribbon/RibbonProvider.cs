@@ -1,5 +1,4 @@
 ﻿using ReactiveUI;
-using System.Reflection;
 using Zero.Core.Commands;
 
 namespace Zero.Core.Ribbon

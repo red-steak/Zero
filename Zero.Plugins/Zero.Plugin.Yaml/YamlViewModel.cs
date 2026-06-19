@@ -1,11 +1,6 @@
-﻿using DynamicData;
-using ReactiveUI;
+﻿using ReactiveUI;
 using ReactiveUI.SourceGenerators;
 using System.Collections.ObjectModel;
-using System.Reactive;
-using System.Reactive.Linq;
-using System.Threading.Tasks.Dataflow;
-using System.Windows.Input;
 using Zero.Core.Commands;
 using Zero.Core.Workspaces;
 
@@ -25,11 +20,6 @@ public partial class YamlViewModel : ReactiveObject, IWorkspaceViewModel
     {
         Commands = commands;
         Messages = messages;
-
-        //// Log messages ===> 
-        //Commands.Load.IsExecuting.Subscribe(WriteLog(Commands.Load, MessageKind.Loading, "Loading...", "Loaded!"));
-        //Commands.Save.IsExecuting.Subscribe(WriteLog(Commands.Save, MessageKind.Saving, "Saving ...", "Saved!"));
-        //Commands.Format.IsExecuting.Subscribe(WriteLog(Commands.Format, MessageKind.Working, "Formating...", "Formating done!"));
 
         View = new YamlView(this);
     }

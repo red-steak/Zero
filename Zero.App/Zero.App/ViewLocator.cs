@@ -1,9 +1,8 @@
-using System;
-using System.Diagnostics.CodeAnalysis;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using Zero.App.ViewModels;
+using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Zero.App;
 
@@ -37,7 +36,7 @@ public class ViewLocator : IDataTemplate
         }
         else
         {
-            return new TextBlock { Text = param.ToString(), Padding = new Thickness(1), Margin = new Thickness(0) }; 
+            return new TextBlock { Text = param.ToString(), Padding = new Thickness(1), Margin = new Thickness(0) };
         }
 
     }

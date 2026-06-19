@@ -1,7 +1,7 @@
 ﻿using Avalonia.Data.Converters;
-using Zero.Core.Ribbon;
 using System;
 using System.Globalization;
+using Zero.Core.Ribbon;
 
 namespace Zero.App.Converters;
 
@@ -11,10 +11,10 @@ public class RibbonSizeToIconSizeConverter : IValueConverter
         => value is RibbonSize size ? size switch
         {
             RibbonSize.Large => 32,
-            RibbonSize.Medium => 18,
-            RibbonSize.Small => 10,
-            _ => 18
-        } : 18;
+            RibbonSize.Medium => 24,
+            RibbonSize.Small => 20,
+            _ => 24
+        } : 24;
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         => throw new NotImplementedException();

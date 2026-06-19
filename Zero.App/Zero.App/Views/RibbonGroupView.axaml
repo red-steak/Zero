@@ -9,7 +9,7 @@
             UseLayoutRounding="True"
             CornerRadius="5"
             Background="#AA66AA55"
-            BorderBrush="#CCC" BorderThickness="1,1,0,0" Margin="4,2" Padding="3,1">
+            BorderBrush="#CCC" BorderThickness="3,0,1,0" Margin="2,1" Padding="2">
         <Border.Styles>
             <Style Selector="Border:dark">
                 <Setter Property="Background"
@@ -17,15 +17,27 @@
             </Style>
         </Border.Styles>
             
-        <StackPanel>
+        <DockPanel>
 
-            <TextBlock Text="{Binding Header}"
-                       HorizontalAlignment="Left"
-                       FontWeight="SemiBold"
-                       FontSize="{Binding Size, Converter={StaticResource RibbonSizeToFontSizeConverter}}"
-                       Margin="2,2,0,1"/>
+            <TextBlock 
+                Height="20"
+                DockPanel.Dock="Left"
+                Text="{Binding Header}"
+                HorizontalAlignment="Center"
+                FontWeight="SemiBold"
+                FontSize="{Binding Size, Converter={StaticResource RibbonSizeToFontSizeConverter}}"
+                Margin="1,1,1,0">
+                <TextBlock.RenderTransform>
+				    <RotateTransform Angle="-70"/>
+                </TextBlock.RenderTransform>
+            </TextBlock>
 
-            <ItemsControl ItemsSource="{Binding Commands}">
+
+            <ItemsControl
+                DockPanel.Dock="Top"
+                Margin="0"
+                Padding="0"
+                ItemsSource="{Binding Commands}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal"/>
@@ -34,12 +46,12 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <views:RibbonButtonView VerticalAlignment="Top" Margin="2,2,1,0" />
+                        <views:RibbonButtonView VerticalAlignment="Top" Margin="1,1,1,0" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
-        </StackPanel>
+        </DockPanel>
     </Border>
 
 </UserControl>

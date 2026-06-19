@@ -1,7 +1,5 @@
 ﻿using ReactiveUI;
 using ReactiveUI.SourceGenerators;
-using System.Reactive;
-using System.Windows.Input;
 
 namespace Zero.Core.Workspaces
 {
@@ -18,7 +16,7 @@ namespace Zero.Core.Workspaces
             this.WhenAnyValue(x => x.Kind).Subscribe(kind => { if (kind == MessageKind.Success) { End = DateTime.Now; Duration = TimeSpan.FromTicks(End.Value.Ticks - Start.Value.Ticks); } });
         }
 
-        public Guid Id { get; init; } 
+        public Guid Id { get; init; }
 
         public IReactiveCommand Command { get; init; }
         [Reactive] MessageKind kind;

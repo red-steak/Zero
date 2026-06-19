@@ -1,9 +1,7 @@
 ﻿using Avalonia.Data.Converters;
 using Avalonia.Media.Imaging;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
 namespace Zero.App.Converters
 {

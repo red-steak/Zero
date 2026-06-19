@@ -1,14 +1,9 @@
 ﻿using ReactiveUI;
 using ReactiveUI.SourceGenerators;
-using System.ComponentModel.Design;
-using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Reflection;
-using System.Reflection.Emit;
-using System.Threading.Tasks.Sources;
-using System.Windows.Input;
 using Zero.Core.KeyboardShortcuts;
 using Zero.Core.Pipelines;
 using Zero.Core.Ribbon;
@@ -47,9 +42,9 @@ namespace Zero.Core.Commands
 
             var properties = GetType()
             .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                .Where(p => p.DeclaringType!.BaseType == typeof(BaseCommandsHolder));            
+                .Where(p => p.DeclaringType!.BaseType == typeof(BaseCommandsHolder));
 
-            foreach (var m in methods) 
+            foreach (var m in methods)
             {
                 var methodName = m.Name;
                 var propertyName = $"{m.Name}Command";
@@ -77,13 +72,13 @@ namespace Zero.Core.Commands
                 var kind = pair.P.GetCustomAttribute<CommandAttribute>()?.Kind ?? default;
 
                 return isExec.Select(exec => (kind, exec));
-                })
+            })
             .Merge()
             .Scan(new HashSet<CommandKind>(), (set, update) =>
             {
-                if (update.exec) 
+                if (update.exec)
                     set.Add(update.kind);
-                else 
+                else
                     set.Remove(update.kind);
                 return [.. set];
             })
@@ -143,15 +138,15 @@ namespace Zero.Core.Commands
 
             //    m.SetValue(this, wrapped);
             //}
-        
+
             _isInitialized = true;
         }
 
 
-       private ReactiveCommand<TIn, TOut> WrapCommand<TIn, TOut>(Guid id,
-            ReactiveCommand<TIn, TOut> original,
-            CommandKind kind,
-            CommandKind[] forbidden)
+        private ReactiveCommand<TIn, TOut> WrapCommand<TIn, TOut>(Guid id,
+             ReactiveCommand<TIn, TOut> original,
+             CommandKind kind,
+             CommandKind[] forbidden)
         {
             // 1) Naše vlastní CanExecute logika
             var customCanExecute = ActiveKinds?.Select(active =>
@@ -171,7 +166,7 @@ namespace Zero.Core.Commands
             var combinedCanExecute =
                 original.CanExecute
                         .CombineLatest(customCanExecute, (orig, custom) => orig && custom);
-            
+
             // 3) Wrapper command
             var wrapped = ReactiveCommand.CreateFromTask<TIn, TOut>(
                 async param =>
@@ -244,7 +239,7 @@ namespace Zero.Core.Commands
                 foreach (var m in methods)
                 {
                     var att = m.GetCustomAttribute<CommandAttribute>();
-                    if (att is not null) 
+                    if (att is not null)
                     {
                         var attId = Guid.Parse(att.Id);
                         var methodId = d.Key;

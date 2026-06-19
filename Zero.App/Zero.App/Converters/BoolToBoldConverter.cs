@@ -14,7 +14,7 @@ namespace Zero.App.Converters
             {
                 return FontWeight.Light;
             }
-            else 
+            else
             {
                 return FontWeight.Bold;
             }
