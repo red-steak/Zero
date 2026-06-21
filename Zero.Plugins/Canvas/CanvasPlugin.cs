@@ -20,7 +20,7 @@ public class CanvasPlugin : IPlugin
     public void ConfigureServices(IServiceCollection services)
     {
         _services = services;
-        services.AddSingleton<ObservableCollection<Message>>([]);
+        services.AddSingleton<ICollection<Message>>(new ObservableCollection<Message>());
         services.AddSingleton<CanvasCommands>();
         services.AddSingleton<CanvasViewModel>();
     }

@@ -1,5 +1,8 @@
-﻿using ReactiveUI;
+﻿using Avalonia.Threading;
+
+using ReactiveUI;
 using ReactiveUI.SourceGenerators;
+using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
@@ -7,12 +10,34 @@ using System.Reflection;
 using Zero.Core.KeyboardShortcuts;
 using Zero.Core.Pipelines;
 using Zero.Core.Ribbon;
+using Zero.Core.Workspaces;
 
 namespace Zero.Core.Commands
 {
     public abstract partial class BaseCommandsHolder : ReactiveObject
     {
         bool _isInitialized = false;
+
+        ICollection<Message> _messages;
+
+        protected void WriteLog(Guid id, MessageKind kind, IReactiveCommand command, string text)
+        {
+            Dispatcher.UIThread.InvokeAsync(async () =>
+            {
+
+                var m = _messages.LastOrDefault(m => m.Id.Equals(id));
+                if (m == null)
+                {
+                    var lastMessage = new Message(command, id) { Kind = kind, Text = text };
+                    _messages.Add(lastMessage);
+                }
+                else
+                {
+                    m.Kind = kind;
+                    m.Text = text;
+                }
+            });
+        }
 
 
         private readonly IEnumerable<ICommandPipeline> _pipelines;
@@ -26,9 +51,10 @@ namespace Zero.Core.Commands
 
         public List<CommandPropertyPair> CommandPropertyPairs { get; } = [];
 
-        public BaseCommandsHolder(IEnumerable<ICommandPipeline> pipelines)
+        public BaseCommandsHolder(IEnumerable<ICommandPipeline> pipelines, ICollection<Message> messages)
         {
             _pipelines = pipelines;
+            _messages = messages;
         }
 
         public void InitializeCommands()
@@ -149,7 +175,7 @@ namespace Zero.Core.Commands
              CommandKind[] forbidden)
         {
             // 1) Naše vlastní CanExecute logika
-            var customCanExecute = ActiveKinds?.Select(active =>
+            var customCanExecute = ActiveKinds!.Select(active =>
             {
                 if (active.Any())
                     return true;

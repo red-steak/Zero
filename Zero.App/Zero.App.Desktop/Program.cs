@@ -3,12 +3,14 @@ using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI.Avalonia;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Zero.App.ViewModels;
 using Zero.App.Views;
 using Zero.Core.Pipelines;
 using Zero.Core.Plugins;
 using Zero.Core.Ribbon;
+using Zero.Core.Workspaces;
 
 namespace Zero.App;
 
@@ -19,6 +21,7 @@ public static class Program
         var services = new ServiceCollection();
 
         // Core
+        services.AddTransient<ICollection<Message>>(provider => new ObservableCollection<Message>());
         services.AddSingleton<IRibbonProvider, RibbonProvider>();
         services.AddSingleton<ICommandPipeline, LoggingPipeline>();
         services.AddSingleton<ICommandPipeline, ErrorPipeline>();

@@ -20,7 +20,6 @@ namespace Zero.Plugin.Fractal
         public void ConfigureServices(IServiceCollection services)
         {
             _services = services;
-            services.AddSingleton<ObservableCollection<Message>>([]);
             services.AddSingleton<FractalCommands>();
             services.AddSingleton<FractalViewModel>();
         }

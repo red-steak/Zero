@@ -5,10 +5,11 @@ using YamlDotNet.Serialization.NamingConventions;
 using Zero.Core.Commands;
 using Zero.Core.Pipelines;
 using Zero.Core.Ribbon;
+using Zero.Core.Workspaces;
 
 namespace Zero.Plugin.YamlViewer;
 
-public partial class YamlViewerCommands(IEnumerable<ICommandPipeline> pipelines) : BaseCommandsHolder(pipelines)
+public partial class YamlViewerCommands(IEnumerable<ICommandPipeline> pipelines, ICollection<Message> messages) : BaseCommandsHolder(pipelines, messages)
 {
     [Ribbon(RibbonTab.Tools, RibbonGroup.Editing, 0, "Tool for YAML", "Tool for YAML", "tool")]
     [Command("{3E776140-BD9A-4633-994B-A7F8C3A3416A}", CommandKind.Specific)]

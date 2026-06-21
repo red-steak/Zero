@@ -9,30 +9,8 @@ using Zero.Core.Workspaces;
 
 namespace Zero.Plugin.Canvas;
 
-public partial class CanvasCommands(IEnumerable<ICommandPipeline> pipelines, ObservableCollection<Message> messages) : BaseCommandsHolder(pipelines)
+public partial class CanvasCommands(IEnumerable<ICommandPipeline> pipelines, ObservableCollection<Message> messages) : BaseCommandsHolder(pipelines, messages)
 {
-    ICollection<Message> _messages = messages;
-
-    public void WriteLog(Guid id, MessageKind kind, IReactiveCommand command, string text)
-    {
-        Dispatcher.UIThread.InvokeAsync(async () =>
-        {
-
-            var m = _messages.LastOrDefault(m => m.Id.Equals(id));
-            if (m == null)
-            {
-                var lastMessage = new Message(command, id) { Kind = kind, Text = text };
-                _messages.Add(lastMessage);
-            }
-            else
-            {
-                m.Kind = kind;
-                m.Text = text;
-            }
-        });
-    }
-
-
     [Ribbon(
         tab: RibbonTab.Home,
         group: RibbonGroup.File,

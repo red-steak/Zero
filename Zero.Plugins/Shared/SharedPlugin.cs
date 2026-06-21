@@ -20,7 +20,6 @@ namespace Zero.Plugin.Shared
         public void ConfigureServices(IServiceCollection services)
         {
             _services = services;
-            services.AddSingleton<ObservableCollection<Message>>([]);
             services.AddSingleton<SharedCommands>();
             services.AddSingleton<SharedViewModel>();
         }
