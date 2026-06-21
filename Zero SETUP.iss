@@ -45,7 +45,7 @@ WizardStyle=modern dark
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: "c:\Users\hp\source\repos\Zero.App\Zero.App.Desktop\bin\Release\net10.0\publish\*"; DestDir: "{app}"; Flags: ignoreversion
+Source: "c:\Users\hp\source\repos\Zero.App\Zero.App.Desktop\bin\Release\net10.0\publish\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system filey
 
 [Registry]
