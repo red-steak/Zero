@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System.Collections.ObjectModel;
 using Zero.Core.Plugins;
 using Zero.Core.Workspaces;
 
@@ -13,8 +12,8 @@ namespace Zero.Plugin.Shared
         {
             Name = "Shared",
             Version = "0.0.0",
-            Dependencies = new(),
-            Conflicts = new()
+            Dependencies = [],
+            Conflicts = []
         };
 
         public void ConfigureServices(IServiceCollection services)
@@ -27,7 +26,7 @@ namespace Zero.Plugin.Shared
         public IWorkspaceViewModel CreateWorkspace()
         {
             if (_services is null)
-                throw new System.InvalidOperationException("Services not configured. Call ConfigureServices first.");
+                throw new InvalidOperationException("Services not configured. Call ConfigureServices first.");
 
             var provider = _services.BuildServiceProvider();
             return provider.GetRequiredService<SharedViewModel>();
