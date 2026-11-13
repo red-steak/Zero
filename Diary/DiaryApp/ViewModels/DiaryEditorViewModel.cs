@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -6,7 +7,7 @@ using Markdig;
 
 namespace DiaryApp.ViewModels;
 
-public partial class DiaryEditorViewModel : ObservableObject
+public partial class DiaryEditorViewModel : ViewModelBase
 {
     private readonly MarkdownPipeline _pipeline = new MarkdownPipelineBuilder()
         .UseAdvancedExtensions()
@@ -17,9 +18,6 @@ public partial class DiaryEditorViewModel : ObservableObject
 
     [ObservableProperty]
     private string _htmlPreview = string.Empty;
-
-    [ObservableProperty]
-    private DateTime _selectedDate = DateTime.Today;
 
     [ObservableProperty]
     private bool _isSaving;

@@ -7,8 +7,8 @@
         x:Class="DiaryApp.Views.MainWindow"
         x:DataType="vm:MainViewModel"
         xmlns:views="clr-namespace:DiaryApp.Views"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="DiaryApp">
+        Icon="/Assets/favicon.ico"
+        Title="{Binding Title}">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,

@@ -1,22 +1,25 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using Avalonia;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DiaryApp.Models;
+using System;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
 
 namespace DiaryApp.ViewModels;
 
 public partial class DiaryListViewModel : ObservableObject
 {
     [ObservableProperty]
-    private ObservableCollection<DiaryEntry> _entries = new();
+    private ObservableCollection<DiaryEntryViewModel> _entries = new();
 
     [ObservableProperty]
-    private DiaryEntry? _selectedEntry;
+    private DiaryEntryViewModel? _selectedEntry;
 
-    public event Action<DiaryEntry>? EntrySelected;
+    public event Action<DiaryEntryViewModel>? EntrySelected;
 
-    partial void OnSelectedEntryChanged(DiaryEntry? value)
+    partial void OnSelectedEntryChanged(DiaryEntryViewModel? value)
     {
         if (value != null)
         {
@@ -25,13 +28,21 @@ public partial class DiaryListViewModel : ObservableObject
     }
 
     [RelayCommand]
+    void Sort()
+    {
+        Entries = [..Entries.OrderByDescending(x => x.Date)];
+    }
+
+    [RelayCommand]
     private void CreateNewEntry()
     {
-        var newEntry = new DiaryEntry
+        var date = DateTime.Now;
+        var czechCulture = CultureInfo.GetCultureInfo("cs-CZ");
+        var newEntry = new DiaryEntryViewModel
         {
-            Date = DateTime.Today,
-            FileName = $"{DateTime.Today:yyyy-MM-dd}.md",
-            MarkdownContent = "# Dnes ..."
+            Date = date,
+            FileName = $"{date:yyyy-MM-dd hh_mm_ss}.md",
+            MarkdownContent = $"# Dnes je {date.ToString("rok yyyy d. MMMM [dddd]", czechCulture)}"
         };
         Entries.Insert(0, newEntry);
         SelectedEntry = newEntry;
