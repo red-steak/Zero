@@ -39,7 +39,8 @@ xmlns:mdxaml="https://github.com/whistyun/Markdown.Avalonia"
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock FontWeight="Light" Text="{Binding Timestamp, StringFormat={}{0:dd.MM. HH:mm:ss.tttt}}" Margin="0,0,10,0"/>
+                        <views:MessageKindImageView />
+                        <TextBlock FontWeight="Light" Text="{Binding Timestamp, StringFormat={}{0:dd.MM. HH:mm:ss.tttt}}" Margin="10,0,10,0"/>
                         <TextBlock FontWeight="Light" Text="{Binding Message}" />
                     </StackPanel>
                 </DataTemplate>
@@ -88,6 +89,21 @@ xmlns:mdxaml="https://github.com/whistyun/Markdown.Avalonia"
             <TextBox DockPanel.Dock="Top" Text="{Binding ListViewModel.SelectedEntry.Note}"
                        FontWeight="Bold" FontSize="16" Margin="0,0,0,10" 
                        PlaceholderText="Poznámka"/>
+            <CheckBox DockPanel.Dock="Top" IsChecked="{Binding ListViewModel.SelectedEntry.Trip}"
+                      Content="Cestování" Margin="0,0,0,10"/>
+            <CheckBox DockPanel.Dock="Top" IsChecked="{Binding ListViewModel.SelectedEntry.FreeTimeActivity}"
+                      Content="Aktivita ve volném čase" Margin="0,0,0,10"/>
+            <StackPanel
+                DockPanel.Dock="Top" Orientation="Horizontal">
+                <Label Content="Práce" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <ComboBox 
+                       PlaceholderText="Vyberte dnešní druh práce" 
+                       SelectedValueBinding="{Binding Value}"
+                       DisplayMemberBinding="{Binding Name}"
+                       SelectedValue="{Binding ListViewModel.SelectedEntry.WorkDayKind}" 
+                       ItemsSource="{Binding ListViewModel.SelectedEntry.WorkKinds}" Margin="0,0,0,10"/>
+                </StackPanel>
+
             <Button DockPanel.Dock="Bottom" Margin="10"
                     Content="Uložit &amp; Publikovat (Commit &amp; Push)"             
                     Command="{Binding SaveAndPublishCommand}"

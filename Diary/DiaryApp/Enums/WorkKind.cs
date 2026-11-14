@@ -3,10 +3,11 @@
     public enum WorkKind
     {
         Undefined,
-        WithoutWork,
-        Morning,
-        Evening,
-        Night,
-        WholeDay
+        NoWork,
+        MorningShift,
+        AfternoonShift,
+        NightShift,
+        FullDay,
+        MorningAndEveningShift
     }
 }

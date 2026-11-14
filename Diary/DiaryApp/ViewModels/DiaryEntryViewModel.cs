@@ -17,6 +17,17 @@ public partial class DiaryEntryViewModel: ViewModelBase
     [ObservableProperty] bool? _trip = false;
     [ObservableProperty] bool _freeTimeActivity = false;
 
+    public List<WorkKindItem> WorkKinds { get; } =
+    [
+        new WorkKindItem("Nedefinováno", WorkKind.Undefined),
+        new WorkKindItem("Bez práce", WorkKind.NoWork),
+        new WorkKindItem("Ranní směna", WorkKind.MorningShift),
+        new WorkKindItem("Odpolední směna", WorkKind.AfternoonShift),
+        new WorkKindItem("Noční směna", WorkKind.NightShift),
+        new WorkKindItem("Celý den", WorkKind.FullDay),
+        new WorkKindItem("Ranní a večerní směna", WorkKind.MorningAndEveningShift)
+    ];
+
     partial void OnMarkdownContentChanged(string value)
     {
         // Aktualizovat HTML náhled, když se změní Markdown obsah
