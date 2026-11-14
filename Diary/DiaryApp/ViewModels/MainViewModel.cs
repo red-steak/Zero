@@ -42,7 +42,7 @@ public partial class MainViewModel : ViewModelBase
         {
             Message = $"Nastavení načtena. Pracovní složka: {Folder}",
             Timestamp = DateTime.Now,
-            Type = Enums.MessageKind.Info
+            Kind = Enums.MessageKind.Success
         });
 
         var files = await FilesService.LoadFilesAsync();
@@ -58,7 +58,7 @@ public partial class MainViewModel : ViewModelBase
         {
             Message = $"Načteno {ListViewModel.Entries.Count} souborů.",
             Timestamp = DateTime.Now,
-            Type = Enums.MessageKind.Info
+            Kind = Enums.MessageKind.Download
         });
 
         ListViewModel.EntrySelected += OnEntrySelected;
@@ -74,7 +74,7 @@ public partial class MainViewModel : ViewModelBase
             {
                 Message = $"Vytvořen první záznam: {ListViewModel.SelectedEntry?.FileName}",
                 Timestamp = DateTime.Now,
-                Type = Enums.MessageKind.Info
+                Kind = Enums.MessageKind.Executed
             });
         }
 
@@ -105,7 +105,27 @@ public partial class MainViewModel : ViewModelBase
         if (folders.Any())
         {
             Folder = folders[0].TryGetLocalPath() ?? string.Empty;
-            await Service.SaveSettingsAsync(new Models.Settings { Folder = Folder });
+            try
+            {
+                await Service.SaveSettingsAsync(new Models.Settings { Folder = Folder });
+            }
+            catch (Exception ex)
+            {
+                Messages.Add(new MessageViewModel
+                {
+                    Message = $"Chyba při ukládání nastavení: {ex.Message}",
+                    Timestamp = DateTime.Now,
+                    Kind = Enums.MessageKind.Error
+                });
+                return;
+            }
+
+            Messages.Add(new MessageViewModel
+            {
+                Message = $"Pracovní složka nastavena na: {Folder}",
+                Timestamp = DateTime.Now,
+                Kind = Enums.MessageKind.Info
+            });
         }
     }
 
@@ -132,16 +152,16 @@ public partial class MainViewModel : ViewModelBase
             {
                 Message = $"Chyba při ukládání souborů: {exception.Message}",
                 Timestamp = DateTime.Now,
-                Type = Enums.MessageKind.Error
+                Kind = Enums.MessageKind.Error
             });
         }
         else
         {
             Messages.Add(new MessageViewModel
             {
-                Message = $"[{ListViewModel.Entries.Count}] Soubor(y) úspěšně uložen(y) a publikován(y).",
+                Message = $"Počet: [{ListViewModel.Entries.Count}] Soubor(y) úspěšně uložen(y) a publikován(y).",
                 Timestamp = DateTime.Now,
-                Type = Enums.MessageKind.Info
+                Kind = Enums.MessageKind.Upload
             });
         }
 
@@ -154,7 +174,7 @@ public partial class MainViewModel : ViewModelBase
         {
             Message = $"Záznam vybrán: {entry.FileName}",
             Timestamp = DateTime.Now,
-            Type = Enums.MessageKind.Info
+            Kind = Enums.MessageKind.Selected
         });
     }
 }

@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+using DiaryApp.Enums;
 using System;
-using System.Globalization;
+using System.Collections.Generic;
 
 namespace DiaryApp.ViewModels;
 
@@ -12,6 +12,10 @@ public partial class DiaryEntryViewModel: ViewModelBase
     [ObservableProperty] DateTimeOffset? _dateOffset;
     [ObservableProperty] string _markdownContent = string.Empty;
     [ObservableProperty] string _note = string.Empty;
+    [ObservableProperty] WorkKind _workDayKind = WorkKind.Undefined;
+    [ObservableProperty] List<string> _tags = [];
+    [ObservableProperty] bool? _trip = false;
+    [ObservableProperty] bool _freeTimeActivity = false;
 
     partial void OnMarkdownContentChanged(string value)
     {
@@ -53,8 +57,5 @@ public partial class DiaryEntryViewModel: ViewModelBase
 
     [ObservableProperty] string _htmlContent = string.Empty;
     [ObservableProperty] bool _isDirty = false;
-
     [ObservableProperty] DiaryEditorViewModel _editorViewModel = new();
-
-
 }

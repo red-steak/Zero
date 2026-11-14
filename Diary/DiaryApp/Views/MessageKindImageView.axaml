@@ -1,0 +1,42 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+        
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+        
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:DiaryApp.ViewModels"
+             x:Class="DiaryApp.Views.MessageKindImageView"
+             x:DataType="vm:MessageViewModel"
+             >
+    <Grid>
+        <Image IsVisible="{Binding Kind, Converter={StaticResource MessageKindDownloadToVisibilityConverter}}"
+       Source="avares://DiaryApp/Assets/Images/download.png" 
+       Width="24" Height="24" />
+        <Image IsVisible="{Binding Kind, Converter={StaticResource MessageKindUploadToVisibilityConverter}}"
+       Source="avares://DiaryApp/Assets/Images/upload.png" 
+       Width="24" Height="24" />
+        <Image IsVisible="{Binding Kind, Converter={StaticResource MessageKindUndefinedToVisibilityConverter}}"
+       Source="avares://DiaryApp/Assets/Images/undefined.png" 
+       Width="24" Height="24" />
+        <Image IsVisible="{Binding Kind, Converter={StaticResource MessageKindErrorToVisibilityConverter}}"
+       Source="avares://DiaryApp/Assets/Images/error.png" 
+       Width="24" Height="24" />
+        <Image IsVisible="{Binding Kind, Converter={StaticResource MessageKindWarningToVisibilityConverter}}"
+       Source="avares://DiaryApp/Assets/Images/warning.png" 
+       Width="24" Height="24" />
+        <Image IsVisible="{Binding Kind, Converter={StaticResource MessageKindSuccessToVisibilityConverter}}"
+       Source="avares://DiaryApp/Assets/Images/success.png" 
+       Width="24" Height="24" />
+                <Image IsVisible="{Binding Kind, Converter={StaticResource MessageKindExecutedToVisibilityConverter}}"
+       Source="avares://DiaryApp/Assets/Images/executed.png" 
+       Width="24" Height="24" />
+        <Image IsVisible="{Binding Kind, Converter={StaticResource MessageKindWarningToVisibilityConverter}}"
+       Source="avares://DiaryApp/Assets/Images/warning.png" 
+       Width="24" Height="24" />
+        <Image IsVisible="{Binding Kind, Converter={StaticResource MessageKindSelectedToVisibilityConverter}}"
+       Source="avares://DiaryApp/Assets/Images/selected.png" 
+       Width="24" Height="24" />
+
+
+     </Grid>
+</UserControl>

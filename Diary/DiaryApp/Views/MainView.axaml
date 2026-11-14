@@ -5,7 +5,9 @@
         
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:DiaryApp.ViewModels"
-             x:Class="DiaryApp.Views.MainView"
+                xmlns:views="using:DiaryApp.Views"             
+                
+x:Class="DiaryApp.Views.MainView"
              x:DataType="vm:MainViewModel"
 xmlns:md="clr-namespace:Markdown.Avalonia;assembly=Markdown.Avalonia"
 xmlns:mdxaml="https://github.com/whistyun/Markdown.Avalonia"
@@ -20,7 +22,7 @@ xmlns:mdxaml="https://github.com/whistyun/Markdown.Avalonia"
         </ia:EventTriggerBehavior>
     </i:Interaction.Behaviors>
 
-    <Grid RowDefinitions="Auto, *, Auto" ColumnDefinitions="250, *, 8, *">
+    <Grid RowDefinitions="Auto, *, Auto" ColumnDefinitions="240, 2*, 8, *">
 
                 <ComboBox HorizontalAlignment="Stretch" Grid.Row="2" Grid.ColumnSpan="4"        
             ItemsSource="{Binding Messages}" 
@@ -28,7 +30,7 @@ xmlns:mdxaml="https://github.com/whistyun/Markdown.Avalonia"
             <ComboBox.SelectionBoxItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Image Height="32" Source="avares://DiaryApp/Assets/Images/custom.png"/>
+                        <views:MessageKindImageView />
                         <TextBlock Padding="8" FontWeight="Bold" Text="{Binding Timestamp, StringFormat={}{0:dd.MM. HH:mm:ss}}" Margin="0,0,10,0"/>
                         <TextBlock Padding="8" FontWeight="Bold" Text="{Binding Message}" />
                     </StackPanel>
@@ -88,7 +90,7 @@ xmlns:mdxaml="https://github.com/whistyun/Markdown.Avalonia"
                        PlaceholderText="Poznámka"/>
             <Button DockPanel.Dock="Bottom" Margin="10"
                     Content="Uložit &amp; Publikovat (Commit &amp; Push)"             
-                    Command="{Binding ListViewModel.SelectedEntry.EditorViewModel.SaveAndPublishCommand}"
+                    Command="{Binding SaveAndPublishCommand}"
                     HorizontalAlignment="Stretch"/>
             <ScrollViewer>
                 <TextBox AcceptsReturn="True"  
