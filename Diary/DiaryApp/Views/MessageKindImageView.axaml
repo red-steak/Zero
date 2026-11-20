@@ -24,14 +24,11 @@
         <Image IsVisible="{Binding Kind, Converter={StaticResource MessageKindWarningToVisibilityConverter}}"
        Source="avares://DiaryApp/Assets/Images/warning.png" 
        Width="24" Height="24" />
-        <Image IsVisible="{Binding Kind, Converter={StaticResource MessageKindSuccessToVisibilityConverter}}"
-       Source="avares://DiaryApp/Assets/Images/success.png" 
-       Width="24" Height="24" />
                 <Image IsVisible="{Binding Kind, Converter={StaticResource MessageKindExecutedToVisibilityConverter}}"
        Source="avares://DiaryApp/Assets/Images/executed.png" 
        Width="24" Height="24" />
-        <Image IsVisible="{Binding Kind, Converter={StaticResource MessageKindWarningToVisibilityConverter}}"
-       Source="avares://DiaryApp/Assets/Images/warning.png" 
+        <Image IsVisible="{Binding Kind, Converter={StaticResource MessageKindSuccessToVisibilityConverter}}"
+       Source="avares://DiaryApp/Assets/Images/success.png" 
        Width="24" Height="24" />
         <Image IsVisible="{Binding Kind, Converter={StaticResource MessageKindSelectedToVisibilityConverter}}"
        Source="avares://DiaryApp/Assets/Images/selected.png" 

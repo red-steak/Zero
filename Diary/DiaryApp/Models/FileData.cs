@@ -7,7 +7,7 @@ namespace DiaryApp.Models
     public class FileData
     {
         public DateTime DateAndTime { get; set; } = DateTime.Now;
-        public string FileName { get; set; } = string.Empty;
+        public string FileName { get; set; } = Guid.NewGuid().ToString() + ".day";
         public string Note { get; set; } = string.Empty;
         public WorkKind WorkKind { get; set; } = WorkKind.Undefined;
         public bool Trip { get; set; } = false;

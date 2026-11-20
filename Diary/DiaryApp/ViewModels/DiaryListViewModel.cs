@@ -38,10 +38,9 @@ public partial class DiaryListViewModel : ObservableObject
     {
         var date = DateTime.Now;
         var czechCulture = CultureInfo.GetCultureInfo("cs-CZ");
-        var newEntry = new DiaryEntryViewModel
+        var newEntry = new DiaryEntryViewModel(this)
         {
             Date = date,
-            FileName = $"{date:yyyy-MM-dd hh_mm_ss}.md",
             MarkdownContent = $"# Dnes je {date.ToString("rok yyyy d. MMMM [dddd]", czechCulture)}"
         };
         Entries.Insert(0, newEntry);

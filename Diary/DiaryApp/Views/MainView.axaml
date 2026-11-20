@@ -59,50 +59,91 @@ xmlns:mdxaml="https://github.com/whistyun/Markdown.Avalonia"
         <!-- Sloupec 1: Seznam zápisů -->
         <DockPanel Grid.Column="0" Grid.Row="1">
             <Button DockPanel.Dock="Top"
-                    Content="Seřadit dle data"
+                    Command="{Binding LoadedCommand}"
+                    Padding="4,8,0,2"
+                    HorizontalAlignment="Stretch" Margin="10">
+                <StackPanel                                        Orientation="Horizontal">
+                    <Image 
+                        Source="avares://DiaryApp/Assets/Images/download.png"
+                        Width="24"
+                        Height="24" />
+                    <TextBlock Text="Znovu načíst"/>
+                </StackPanel>
+            </Button>
+            <Button DockPanel.Dock="Top"
+                    Padding="4,8,0,2"
                     Command="{Binding ListViewModel.SortCommand}"
-                    HorizontalAlignment="Stretch" Margin="10"/>
-            <Button DockPanel.Dock="Bottom" 
+                    HorizontalAlignment="Stretch" Margin="10">
+                            <StackPanel                                        Orientation="Horizontal">
+                    <Image 
+                        Source="avares://DiaryApp/Assets/Images/sort.png"
+                        Width="24"
+                        Height="24" />
+                    <TextBlock Text="Seřadit dle data"/>
+                </StackPanel>
+</Button>
+            <Button DockPanel.Dock="Top" 
                     Content="+ Nový zápis" 
                     Command="{Binding ListViewModel.CreateNewEntryCommand}" 
                     HorizontalAlignment="Stretch" Margin="10"/>
-            <ListBox ItemsSource="{Binding ListViewModel.Entries}" 
+            <ListBox Background="Transparent" ItemsSource="{Binding ListViewModel.Entries}" 
                      SelectedItem="{Binding ListViewModel.SelectedEntry}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <ItemsControl>
-                            <TextBlock 
-                                FontWeight="Bold"
-                                Text="{Binding Date, StringFormat={}{0:yyyy MMMM d dddd}}" />
-                            <TextBlock Text="{Binding Note}"/>                        
-                        </ItemsControl>
+                            <Border
+                                Padding="2"
+                                CornerRadius="5"
+                                BorderThickness="1"
+                                BorderBrush="LightGray">
+                                <ItemsControl>
+                                    <TextBlock
+                                        Background="Transparent"
+                                        FontWeight="Bold"
+                                        Text="{Binding Date, StringFormat={}{0:yyyy MMMM d dddd}}" />
+                                    <TextBlock Background="Transparent" Text="{Binding Note}"/>
+                                </ItemsControl>
+                            </Border>    
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
         </DockPanel>
 
-        <!-- Sloupec 2: Markdown Editor -->
+        <!-- Sloupec 2: Properties & Markdown Editor -->
         <DockPanel Grid.Column="1" Grid.Row="1" Margin="10">
-            
-            <DatePicker DockPanel.Dock="Top" SelectedDate="{Binding ListViewModel.SelectedEntry.DateOffset}" 
-                       FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
-            <TextBox DockPanel.Dock="Top" Text="{Binding ListViewModel.SelectedEntry.Note}"
-                       FontWeight="Bold" FontSize="16" Margin="0,0,0,10" 
-                       PlaceholderText="Poznámka"/>
-            <CheckBox DockPanel.Dock="Top" IsChecked="{Binding ListViewModel.SelectedEntry.Trip}"
-                      Content="Cestování" Margin="0,0,0,10"/>
-            <CheckBox DockPanel.Dock="Top" IsChecked="{Binding ListViewModel.SelectedEntry.FreeTimeActivity}"
-                      Content="Aktivita ve volném čase" Margin="0,0,0,10"/>
-            <StackPanel
-                DockPanel.Dock="Top" Orientation="Horizontal">
-                <Label Content="Práce" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <ComboBox 
-                       PlaceholderText="Vyberte dnešní druh práce" 
-                       SelectedValueBinding="{Binding Value}"
-                       DisplayMemberBinding="{Binding Name}"
-                       SelectedValue="{Binding ListViewModel.SelectedEntry.WorkDayKind}" 
-                       ItemsSource="{Binding ListViewModel.SelectedEntry.WorkKinds}" Margin="0,0,0,10"/>
-                </StackPanel>
+            <Border DockPanel.Dock="Top" 
+                Margin="2" UseLayoutRounding="True" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray">
+                <Expander Header="Vlastnosti" HorizontalAlignment="Stretch">
+                    <DockPanel>
+                        <DatePicker DockPanel.Dock="Top" SelectedDate="{Binding ListViewModel.SelectedEntry.DateOffset}" 
+                               FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
+                        <TextBox DockPanel.Dock="Top" Text="{Binding ListViewModel.SelectedEntry.Note}"
+                               FontWeight="Bold" FontSize="16" Margin="0,0,0,10" 
+                               PlaceholderText="Poznámka"/>
+                        <CheckBox DockPanel.Dock="Top" IsChecked="{Binding ListViewModel.SelectedEntry.Trip}"
+                              Content="Cestování" Margin="0,0,0,10"/>
+                        <CheckBox DockPanel.Dock="Top" IsThreeState="True" IsChecked="{Binding ListViewModel.SelectedEntry.FreeTimeActivity}"
+                              Content="Aktivita ve volném čase" Margin="0,0,0,10"/>
+                        <StackPanel
+                            DockPanel.Dock="Top" Orientation="Horizontal">
+                            <Label Content="Práce" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <ComboBox 
+                               PlaceholderText="Vyberte dnešní druh práce" 
+                               SelectedValueBinding="{Binding Value}"
+                               DisplayMemberBinding="{Binding Name}"
+                               AutoScrollToSelectedItem="True" 
+SelectedValue="WorkDayKind"                               
+ItemsSource="{Binding ListViewModel.SelectedEntry.WorkKinds}" Margin="0,0,0,10"/>
+                        </StackPanel>
+
+                        <StackPanel
+                            DockPanel.Dock="Top" Orientation="Horizontal">
+                            <Label Content="Tagy" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <views:TagsView DataContext="{Binding ListViewModel.SelectedEntry}" Margin="0,0,0,10"/>
+                        </StackPanel>
+                    </DockPanel>
+                </Expander>
+            </Border>
+
 
             <Button DockPanel.Dock="Bottom" Margin="10"
                     Content="Uložit &amp; Publikovat (Commit &amp; Push)"             

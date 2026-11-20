@@ -59,6 +59,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\TagsView.axaml.cs">
+      <DependentUpon>TagsView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\MessageKindImageView.axaml.cs">
       <DependentUpon>MessageKindImageView.axaml</DependentUpon>
     </Compile>

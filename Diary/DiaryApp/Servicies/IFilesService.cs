@@ -7,7 +7,7 @@ namespace DiaryApp.Servicies
 {
     public interface IFilesService
     {
-        Task<ICollection<MdFile>> LoadFilesAsync();
-        Task<(bool, Exception?) > SaveFilesAsync(ICollection<MdFile> files);
+        Task<ICollection<FileData>> LoadFilesAsync();
+        Task<(bool, Exception?) > SaveFilesAsync(ICollection<FileData> files);
     }
 }

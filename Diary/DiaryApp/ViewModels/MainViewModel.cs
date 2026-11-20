@@ -4,6 +4,7 @@ using AvaloniaEdit.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DiaryApp.Servicies;
+using Markdown.Avalonia.Html.Core;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -21,11 +22,7 @@ public partial class MainViewModel : ViewModelBase
     {
         Service = settingsService;
         FilesService = filesService;
-    }
 
-    [RelayCommand]
-    private async Task OnLoadedAsync()
-    {
         Messages.CollectionChanged += (o, e) =>
         {
             if (Messages.Any())
@@ -33,33 +30,40 @@ public partial class MainViewModel : ViewModelBase
                 LastMessage = Messages.Last();
             }
         };
+    }
 
+    [RelayCommand]
+    private async Task OnLoadedAsync()
+    {
         // Inicializační logika
         var settings = await Service.LoadSettingsAsync();
         Folder = settings.Folder ?? string.Empty;
-
-        Messages.Add(new MessageViewModel
-        {
-            Message = $"Nastavení načtena. Pracovní složka: {Folder}",
-            Timestamp = DateTime.Now,
-            Kind = Enums.MessageKind.Success
-        });
+        var messFolder = $"Nastavení načtena. Pracovní složka: {Folder}";
+        MessSuccess(messFolder);
 
         var files = await FilesService.LoadFilesAsync();
 
-        ListViewModel.Entries = [.. files.Select(f => new DiaryEntryViewModel()
-        {
-            FileName = f.FileName,
-            Note = f.Note,
-            MarkdownContent = f.Content
-        })];
+        ListViewModel.Entries = [
+            ..files.Select(f =>
+            {
+                var entry = new DiaryEntryViewModel(ListViewModel)
+                {
+                    FileName = f.FileName,
+                    Note = f.Note,
+                    MarkdownContent = f.MarkdownContent,
+                    Date = f.DateAndTime,
+                    IsDirty = false,
+                    Trip = f.Trip,
+                    WorkDayKind = f.WorkKind,
+                };
 
-        Messages.Add(new MessageViewModel
-        {
-            Message = $"Načteno {ListViewModel.Entries.Count} souborů.",
-            Timestamp = DateTime.Now,
-            Kind = Enums.MessageKind.Download
-        });
+                entry.Tags = [..f.Tags.Select(x => new Tag(x, entry))];
+
+                return entry;
+            })
+        ];
+
+        MessDownload();
 
         ListViewModel.EntrySelected += OnEntrySelected;
 
@@ -70,14 +74,32 @@ public partial class MainViewModel : ViewModelBase
         else
         {
             ListViewModel.CreateNewEntryCommand.Execute(null);
-            Messages.Add(new MessageViewModel
-            {
-                Message = $"Vytvořen první záznam: {ListViewModel.SelectedEntry?.FileName}",
-                Timestamp = DateTime.Now,
-                Kind = Enums.MessageKind.Executed
-            });
+            var mess = $"Vytvořen první záznam: {ListViewModel.SelectedEntry?.FileName}";
+            MessExecuted(mess);
         }
 
+        var allTags = new ObservableCollection<Tag>();
+        foreach (var entry in ListViewModel.Entries)
+        {
+            foreach (var tag in entry.Tags)
+            {
+                if (!allTags.Any(x => x.Value == tag.Value))
+                {
+                    allTags.Add(tag);
+                }
+            }
+        }
+        ListViewModel.SelectedEntry!.Tags = allTags;
+    }
+
+    private void MessDownload()
+    {
+        Messages.Add(new MessageViewModel
+        {
+            Message = $"Načteno {ListViewModel.Entries.Count} souborů.",
+            Timestamp = DateTime.Now,
+            Kind = Enums.MessageKind.Download
+        });
     }
 
     [ObservableProperty]
@@ -111,22 +133,24 @@ public partial class MainViewModel : ViewModelBase
             }
             catch (Exception ex)
             {
-                Messages.Add(new MessageViewModel
-                {
-                    Message = $"Chyba při ukládání nastavení: {ex.Message}",
-                    Timestamp = DateTime.Now,
-                    Kind = Enums.MessageKind.Error
-                });
+                var messEx = $"Chyba při ukládání nastavení: {ex.Message}";
+                MessError(messEx);
                 return;
             }
 
-            Messages.Add(new MessageViewModel
-            {
-                Message = $"Pracovní složka nastavena na: {Folder}",
-                Timestamp = DateTime.Now,
-                Kind = Enums.MessageKind.Info
-            });
+            var mess = $"Pracovní složka nastavena na: {Folder}";
+            MessExecuted(mess);
         }
+    }
+
+    private void MessExecuted(string mess)
+    {
+        Messages.Add(new MessageViewModel
+        {
+            Message = mess,
+            Timestamp = DateTime.Now,
+            Kind = Enums.MessageKind.Executed
+        });
     }
 
     [RelayCommand]
@@ -137,39 +161,70 @@ public partial class MainViewModel : ViewModelBase
 
     async Task SaveFilesAsync()
     {
-        var (success, exception) = await FilesService.SaveFilesAsync([.. ListViewModel.Entries.Select(e => new Models.MdFile
+        var (success, exception) = await FilesService.SaveFilesAsync([.. ListViewModel.Entries.Select(e => new Models.FileData
         {
             FileName = e.FileName,
-            Content = e.MarkdownContent,
-            Note = e.Note
+            MarkdownContent = e.MarkdownContent,
+            Note = e.Note,
+            DateAndTime = e.Date,
+            FreeTimeActivity = e.FreeTimeActivity,
+            Tags = [.. e.Tags.Select(x => x.Value)],
+            Trip = e.Trip.HasValue && e.Trip.Value,
+            WorkKind = e.WorkDayKind
         })]);
 
         if (!success && exception != null)
         {
             // Zde můžete přidat logiku pro zobrazení chybové zprávy uživateli
-            Console.WriteLine($"Chyba při ukládání souborů: {exception.Message}");
-            Messages.Add(new MessageViewModel
-            {
-                Message = $"Chyba při ukládání souborů: {exception.Message}",
-                Timestamp = DateTime.Now,
-                Kind = Enums.MessageKind.Error
-            });
+            var mess = $"Chyba při ukládání souborů: {exception.Message}";
+            Console.WriteLine(mess);
+            MessError(mess);
         }
         else
         {
-            Messages.Add(new MessageViewModel
-            {
-                Message = $"Počet: [{ListViewModel.Entries.Count}] Soubor(y) úspěšně uložen(y) a publikován(y).",
-                Timestamp = DateTime.Now,
-                Kind = Enums.MessageKind.Upload
-            });
+            MessUploaded();
         }
 
+    }
+
+    private void MessError(string mess)
+    {
+        Messages.Add(new MessageViewModel
+        {
+            Message = mess,
+            Timestamp = DateTime.Now,
+            Kind = Enums.MessageKind.Error
+        });
+    }
+
+    private void MessSuccess(string mess)
+    {
+        Messages.Add(new MessageViewModel
+        {
+            Message = mess,
+            Timestamp = DateTime.Now,
+            Kind = Enums.MessageKind.Success
+        });
+    }
+
+    private void MessUploaded()
+    {
+        Messages.Add(new MessageViewModel
+        {
+            Message = $"Počet: [{ListViewModel.Entries.Count}] Soubor(y) úspěšně uložen(y) a publikován(y).",
+            Timestamp = DateTime.Now,
+            Kind = Enums.MessageKind.Upload
+        });
     }
 
     private void OnEntrySelected(DiaryEntryViewModel entry)
     {
         Title = $"Diary App - {entry.FileName}";
+        MessSelected(entry);
+    }
+
+    private void MessSelected(DiaryEntryViewModel entry)
+    {
         Messages.Add(new MessageViewModel
         {
             Message = $"Záznam vybrán: {entry.FileName}",
